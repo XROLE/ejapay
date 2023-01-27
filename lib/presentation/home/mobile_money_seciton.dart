@@ -1,3 +1,4 @@
+import 'package:ejapay/presentation/mobile_money/create_mobile_money.dart';
 import 'package:ejapay/presentation/widgets/action_button.dart';
 import 'package:ejapay/utils/app_colors.dart';
 import 'package:ejapay/utils/app_text_style.dart';
@@ -59,6 +60,13 @@ class MobileMoneySection extends StatelessWidget {
         SizedBox(height: size.height * .05),
         InkWell(
           onTap: () {
+
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CreateMobileMoney(),
+              ),
+            );
           },
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
