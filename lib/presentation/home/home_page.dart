@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Text(
                       "Choose a payment method",
-                      style: AppTextStyle.title(color: AppColors.primaryBlue),
+                      style: AppTextStyle.title(color: AppColors.appyBlue),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: size.height * .04),
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                       text: TextSpan(children: [
                         TextSpan(
                             text: "20,000",
-                            style: AppTextStyle.title(color: AppColors.primaryBlue)),
+                            style: AppTextStyle.title(color: AppColors.appyBlue)),
                         TextSpan(
                             text: "CFA",
                             style: AppTextStyle.title(

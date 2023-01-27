@@ -15,7 +15,7 @@ class NavButton extends StatelessWidget {
         color: AppColors.primary.withOpacity(.2),
         shape: BoxShape.circle,
       ),
-      child: icon ?? Icon(Icons.arrow_back_ios, color: AppColors.primaryBlue.withOpacity(.7), size: 13,),
+      child: icon ?? Icon(Icons.arrow_back_ios, color: AppColors.appyBlue.withOpacity(.7), size: 13,),
     );
   }
 }
