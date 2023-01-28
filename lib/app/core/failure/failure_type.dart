@@ -1,0 +1,4 @@
+enum FailureTypes{
+   connectionTimeOut,
+   socketException,
+}
