@@ -1,6 +1,7 @@
 import 'package:ejapay/data/local/mobile_money.dart';
 import 'package:ejapay/presentation/base/base_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class CreateMobileMoneyViewModel extends BaseViewModel {
   TextEditingController fullNameController = TextEditingController();
@@ -21,11 +22,10 @@ class CreateMobileMoneyViewModel extends BaseViewModel {
   }
 
   proceed() {
+    String apiKey = dotenv.env["APIKEY"] ?? "";
     String fullName = fullNameController.text;
     String phoneNumber = phoneNumberController.text;
 
-    print("This is the full name : $fullName");
-    print("This is the phone number : $phoneNumber");
-    print("This is mobileMoneyType : $mobileMoneyType");
+    print("This is the apiKey : $apiKey");
   }
 }
