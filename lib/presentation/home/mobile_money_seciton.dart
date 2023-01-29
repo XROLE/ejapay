@@ -64,7 +64,7 @@ class MobileMoneySection extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => CreateMobileMoney(),
+                builder: (context) => const CreateMobileMoney(),
               ),
             );
           },

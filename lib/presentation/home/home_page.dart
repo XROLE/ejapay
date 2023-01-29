@@ -1,3 +1,5 @@
+import 'package:ejapay/app/core/di/service_locator.dart';
+import 'package:ejapay/data/remote/auth/auth_service.dart';
 import 'package:ejapay/presentation/base/base_view.dart';
 import 'package:ejapay/presentation/home/home_view_model.dart';
 import 'package:ejapay/presentation/widgets/nav_button.dart';
@@ -28,7 +30,8 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.white,
         ),
         body: BaseView<HomeViewModel>(
-            model: HomeViewModel(),
+            model: HomeViewModel(sl.get<AuthService>()),
+            onModelReady: (model) => model.init(),
             builder: (context, model, _) {
               return SingleChildScrollView(
                   child: Padding(

@@ -1,9 +1,11 @@
+import 'package:ejapay/app/core/di/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'presentation/home/home_page.dart';
 
 void main() async {
+  await setUpServiceLocator();
   await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
