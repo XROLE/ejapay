@@ -1,11 +1,13 @@
 import 'package:ejapay/app/core/di/service_locator.dart';
 import 'package:ejapay/data/remote/auth/auth_service.dart';
+import 'package:ejapay/data/remote/payment/payment_service.dart';
 import 'package:ejapay/presentation/base/base_view.dart';
 import 'package:ejapay/presentation/home/home_view_model.dart';
 import 'package:ejapay/presentation/widgets/nav_button.dart';
 import 'package:ejapay/presentation/widgets/payment_method_tile.dart';
 import 'package:ejapay/utils/app_colors.dart';
 import 'package:ejapay/utils/app_text_style.dart';
+import 'package:ejapay/utils/tile_shimmer_loader.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,7 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-  final size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
 
     return Scaffold(
         appBar: AppBar(
@@ -30,8 +32,9 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.white,
         ),
         body: BaseView<HomeViewModel>(
-            model: HomeViewModel(sl.get<AuthService>()),
-            onModelReady: (model) => model.init(),
+            model: HomeViewModel(
+                authService: sl.get<AuthService>(), paymentService: sl.get<PaymentService>()),
+            onModelReady: (model) => model.init(context),
             builder: (context, model, _) {
               return SingleChildScrollView(
                   child: Padding(
@@ -61,8 +64,7 @@ class _HomePageState extends State<HomePage> {
                     RichText(
                       text: TextSpan(children: [
                         TextSpan(
-                            text: "20,000",
-                            style: AppTextStyle.title(color: AppColors.appyBlue)),
+                            text: "20,000", style: AppTextStyle.title(color: AppColors.appyBlue)),
                         TextSpan(
                             text: "CFA",
                             style: AppTextStyle.title(
@@ -92,75 +94,28 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     SizedBox(height: size.height * .015),
-                    const PaymentMethodTile(
-                      title: "Cash payment",
-                      subTitle: "Fees Other",
-                    ),
-                    const PaymentMethodTile(
-                      title: "Mobile money",
-                      subTitle: "Fees 200CFA",
-                      icon: Icons.ad_units_sharp,
-                    ),
-                    const PaymentMethodTile(
-                      title: "Bank transfer",
-                      subTitle: "Fees variable",
-                      icon: Icons.account_balance_outlined,
-                    ),
-                    const PaymentMethodTile(
-                      title: "Credit card",
-                      subTitle: "Fees variable",
-                      icon: Icons.aspect_ratio_rounded,
-                    ),
-                    const PaymentMethodTile(
-                      title: "Crypto-currency",
-                      subTitle: "Fees",
-                      icon: Icons.ad_units_sharp,
-                    ),
-                    const PaymentMethodTile(
-                      title: "Crypto-currency",
-                      subTitle: "Fees",
-                      icon: Icons.ad_units_sharp,
-                    ),
-                    const PaymentMethodTile(
-                      title: "Crypto-currency",
-                      subTitle: "Fees",
-                      icon: Icons.ad_units_sharp,
-                    ),
-                    const PaymentMethodTile(
-                      title: "Crypto-currency",
-                      subTitle: "Fees",
-                      icon: Icons.ad_units_sharp,
-                    ),
-                    const PaymentMethodTile(
-                      title: "Crypto-currency",
-                      subTitle: "Fees",
-                      icon: Icons.ad_units_sharp,
-                    ),
-                    const PaymentMethodTile(
-                      title: "Crypto-currency",
-                      subTitle: "Fees",
-                      icon: Icons.ad_units_sharp,
-                    ),
-                    const PaymentMethodTile(
-                      title: "Crypto-currency",
-                      subTitle: "Fees",
-                      icon: Icons.ad_units_sharp,
-                    ),
-                    const PaymentMethodTile(
-                      title: "Crypto-currency",
-                      subTitle: "Fees",
-                      icon: Icons.ad_units_sharp,
-                    ),
-                    const PaymentMethodTile(
-                      title: "Crypto-currency",
-                      subTitle: "Fees",
-                      icon: Icons.ad_units_sharp,
-                    ),
-                    const PaymentMethodTile(
-                      title: "Crypto-currency",
-                      subTitle: "Fees",
-                      icon: Icons.ad_units_sharp,
-                    ),
+                    model.isLoading
+                        ? SizedBox(
+                          height: size.height * .4,
+                          child: ListView.builder(
+                              itemCount: 5,
+                              itemBuilder: (context, _) {
+                                return const TileShimmerLoader();
+                              },
+                            ),
+                        )
+                        : SizedBox(
+                            height: size.height * .4,
+                            child: ListView.builder(
+                              itemCount: model.paymentMethods.length,
+                              itemBuilder: (context, index) {
+                                return PaymentMethodTile(
+                                  title: model.paymentMethods[index].titleEn ?? "",
+                                  subTitle: model.paymentMethods[index].descriptionEn ?? "",
+                                );
+                              },
+                            ),
+                          ),
                   ],
                 ),
               ));
