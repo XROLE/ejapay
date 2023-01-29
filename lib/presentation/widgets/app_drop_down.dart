@@ -6,7 +6,7 @@ class AppDropDownField extends StatelessWidget {
   final String value;
   final Function(dynamic e) onChange;
 
-  AppDropDownField(
+  const AppDropDownField(
       {required this.value,
       required this.dropDownMenuItemList,
       required this.onChange,

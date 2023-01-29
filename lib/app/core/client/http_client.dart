@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:ejapay/app/core/endpoints/endpoints.dart';
 import 'package:ejapay/app/core/failure/failure.dart';
-import 'package:flutter/material.dart';
+import 'package:ejapay/utils/app_logger.dart';
 
 class HttpClient {
   static String baseUrl = Endpoints.baseUrl;
@@ -17,7 +17,7 @@ class HttpClient {
   static final dio = createDio();
 
   Future<Response?> get(String url) async {
-    debugPrint("url ==> $url");
+    AppLogger.log("url ==> $url");
 
     try {
       Response response = await dio.get(url);
@@ -34,22 +34,25 @@ class HttpClient {
   }
 
   Future post(String url, dynamic data, {Map<String, String>? headers}) async {
-    debugPrint('url ============> $url');
-    debugPrint(' data: ============> $data');
-    debugPrint(' header: ============> $headers');
+    AppLogger.log('url ============> $url');
+    AppLogger.log(' data: ============> $data');
+    AppLogger.log(' header: ============> $headers');
     try {
-      final response = await dio.post(url, data: data, options: Options(headers: headers));
-      debugPrint("Response $response");
+      Response? response = await dio.post(url, data: data, options: Options(headers: headers));
+      AppLogger.log("Response $response");
 
       return response;
     } on DioError catch (e) {
-      if (e.response != null && e.response?.data != null && e.response?.data['message']) {
+      AppLogger.log("============> failed ${e.response}");
+
+      if (e.response != null && e.response?.data != null && e.response?.data['message'] != null) {
         throw Failure(e.response?.data['message']);
       } else {
-        debugPrint("Error ================> $e");
+        AppLogger.log("Error ================> $e");
         throw Failure("Something went wrong, please try again later");
       }
     } catch (e) {
+      AppLogger.log("catch Error ================> $e");
       throw Failure("Something went wrong, please try again later");
     }
   }

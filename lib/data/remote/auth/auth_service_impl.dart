@@ -1,0 +1,51 @@
+import 'package:dio/dio.dart';
+import 'package:ejapay/app/core/client/http_client.dart';
+import 'package:ejapay/app/core/endpoints/endpoints.dart';
+import 'package:ejapay/app/core/failure/failure.dart';
+import 'package:ejapay/data/remote/auth/auth_service.dart';
+import 'package:ejapay/utils/app_logger.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+class AuthServiceImpl implements AuthService {
+  final HttpClient httpClient;
+  AuthServiceImpl(this.httpClient);
+
+  @override
+  Future<String> login() async {
+    try {
+      const String url = Endpoints.login;
+      final String log = dotenv.env["LOG"]!;
+      final String password = dotenv.env["PASSWORD"]!;
+      final String apiKey = dotenv.env["APIKEY"]!;
+      final String clientId = dotenv.env["CLIENTID"]!;
+      final String appVersion = dotenv.env["VERSION"]!;
+      final String appPlatform = dotenv.env["PLATFORM"]!;
+      final String client = dotenv.env["CLIENT"]!;
+      final String language = dotenv.env["LANGUAGE"]!;
+
+      Map<String, dynamic> data = {
+        'log': log,
+        'password': password,
+      };
+      Map<String, String> headers = {
+        'api-key': apiKey,
+        'client-id': clientId,
+        'app-version': appVersion,
+        'app-platform': appPlatform,
+        'client': client,
+        'Accept-language': language,
+      };
+
+      Response? res = await httpClient.post(url, data, headers: headers);
+      AppLogger.log("This is the response :  $res");
+
+      return "Login in progress";
+    } on Failure catch (e) {
+      AppLogger.log(" err : ${e.errorMessage}");
+      return "";
+    } catch (e) {
+      AppLogger.log("This is the catch error : $e");
+      return "";
+    }
+  }
+}
