@@ -96,26 +96,30 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(height: size.height * .015),
                     model.isLoading
                         ? SizedBox(
-                          height: size.height * .4,
-                          child: ListView.builder(
+                            height: size.height * .4,
+                            child: ListView.builder(
                               itemCount: 5,
                               itemBuilder: (context, _) {
                                 return const TileShimmerLoader();
                               },
                             ),
-                        )
-                        : SizedBox(
-                            height: size.height * .4,
-                            child: ListView.builder(
-                              itemCount: model.paymentMethods.length,
-                              itemBuilder: (context, index) {
-                                return PaymentMethodTile(
-                                  title: model.paymentMethods[index].titleEn ?? "",
-                                  subTitle: model.paymentMethods[index].descriptionEn ?? "",
-                                );
-                              },
-                            ),
-                          ),
+                          )
+                        : StatefulBuilder(
+                          builder: ((context, setInnerState) =>  SizedBox(
+                              height: size.height * .4,
+                              child: ListView.builder(
+                                itemCount: model.paymentMethods.length,
+                                itemBuilder: (context, index) {
+                                  return PaymentMethodTile(
+                                    title: model.paymentMethods[index].titleEn ?? "",
+                                    subTitle: model.paymentMethods[index].descriptionEn ?? "",
+                                    paymentMethodId: model.paymentMethods[index].id,
+                                    isFetchingPaymentSettings: model.isFetchingPaymentSettings,
+                                  );
+                                },
+                              ),
+                            )),
+                        ),
                   ],
                 ),
               ));
