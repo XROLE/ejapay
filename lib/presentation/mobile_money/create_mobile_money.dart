@@ -65,17 +65,20 @@ class _CreateMobileMoneyState extends State<CreateMobileMoney> {
                           ),
                           const SizedBox(height: 8),
                           AppDropDownField(
-                              value: model.mobileMoneyType,
-                              dropDownMenuItemList: mobileMoneyModelList
-                                  .map((mobileMoney) => DropdownMenuItem(
-                                        child: Text(mobileMoney.name,
-                                            style: AppTextStyle.medium(color: AppColors.appyBlue)),
-                                        value: mobileMoney.name,
-                                      ))
-                                  .toList(),
-                              onChange: (s) {
-                                model.mobileMoneyType = s;
-                              }),
+                            value: model.mobileMoneyType,
+                            dropDownMenuItemList: mobileMoneyModelList
+                                .map((mobileMoney) => DropdownMenuItem(
+                                      value: mobileMoney.name,
+                                      child: Text(
+                                        mobileMoney.name,
+                                        style: AppTextStyle.medium(color: AppColors.appyBlue),
+                                      ),
+                                    ))
+                                .toList(),
+                            onChange: (s) {
+                              model.mobileMoneyType = s;
+                            },
+                          ),
                           SizedBox(
                             height: size.height * .04,
                           ),

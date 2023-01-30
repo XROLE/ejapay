@@ -12,7 +12,7 @@ class BaseView<T extends ChangeNotifier> extends StatefulWidget {
   final Function(T)? onModelReady;
   final Function(T)? onModelDispose;
 
-  BaseView({
+  const BaseView({
     Key? key,
     required this.builder,
     required this.model,

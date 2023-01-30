@@ -36,7 +36,7 @@ class MobileMoneySection extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                       )
-                    : const PaymentSettingsWidget(),
+                    : PaymentSettingsWidget(wallets: model.paymentSettingsList),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

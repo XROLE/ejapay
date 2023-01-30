@@ -2,6 +2,7 @@ import 'package:ejapay/app/core/failure/failure.dart';
 import 'package:ejapay/data/remote/auth/auth_service.dart';
 import 'package:ejapay/data/remote/payment/payment_service.dart';
 import 'package:ejapay/domain/models/payment_method_model.dart';
+import 'package:ejapay/domain/models/wallet_model.dart';
 import 'package:ejapay/presentation/base/base_view_model.dart';
 import 'package:ejapay/providers/user_provider.dart';
 import 'package:ejapay/utils/app_logger.dart';
@@ -34,9 +35,9 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  List _paymentSettingsList = [];
-  List get paymentSettingsList => _paymentSettingsList;
-  set paymentSettingsList(List val) {
+  List<WalletModel> _paymentSettingsList = [];
+  List<WalletModel> get paymentSettingsList => _paymentSettingsList;
+  set paymentSettingsList(List<WalletModel> val) {
     _paymentSettingsList = val;
     notifyListeners();
   }
@@ -60,14 +61,17 @@ class HomeViewModel extends BaseViewModel {
     UserProvider userProvider = Provider.of(context, listen: false);
     try {
       isFetchingPaymentSettings = true;
-      List paymentSettings =
+      List<WalletModel> paymentSettings =
           await paymentService.getPaymentSettings(token: userProvider.token, methodId: id);
       paymentSettingsList = paymentSettings;
       isFetchingPaymentSettings = false;
       
     } on Failure catch (e) {
+      AppLogger.log(e.errorMessage);
       isFetchingPaymentSettings = false;
+      AppLogger.log("Error: ${e.errorMessage}");
     } catch (e) {
+       AppLogger.log("Error: $e");
       isFetchingPaymentSettings = false;
     }
   }
