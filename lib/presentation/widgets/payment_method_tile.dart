@@ -8,13 +8,27 @@ class PaymentMethodTile extends StatelessWidget {
   final IconData? icon;
   final String title;
   final String subTitle;
-  const PaymentMethodTile({super.key, required this.title, required this.subTitle, this.icon});
+  final int paymentMethodId;
+  final bool isFetchingPaymentSettings;
+  const PaymentMethodTile(
+      {super.key,
+      required this.title,
+      required this.subTitle,
+      required this.paymentMethodId,
+      required this.isFetchingPaymentSettings,
+      this.icon});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        AppHelpers.bottomModal(context: context, title: "Select the mobile money method", child: const MobileMoneySection());
+        AppHelpers.bottomModal(
+            context: context,
+            title: "Select the mobile money method",
+            isLoading: isFetchingPaymentSettings,
+            child: MobileMoneySection(
+              paymentMethodId: paymentMethodId,
+            ));
       },
       child: ListTile(
         leading: Icon(

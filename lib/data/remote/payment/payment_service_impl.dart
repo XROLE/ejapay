@@ -45,4 +45,37 @@ class PaymentServiceImpl implements PaymentService {
       return [];
     }
   }
+
+  @override
+  Future getPaymentSettings({required String token, required methodId}) async {
+    try {
+      final String url = Endpoints.getPaymentSettings(methodId);
+      final String apiKey = dotenv.env["APIKEY"]!;
+      final String clientId = dotenv.env["CLIENTID"]!;
+      final String appVersion = dotenv.env["VERSION"]!;
+      final String appPlatform = dotenv.env["PLATFORM"]!;
+      final String client = dotenv.env["CLIENT"]!;
+      final String language = dotenv.env["LANGUAGE"]!;
+
+      Map<String, String> headers = {
+        'api-key': apiKey,
+        'client-id': clientId,
+        'app-version': appVersion,
+        'app-platform': appPlatform,
+        'client': client,
+        'Accept-language': language,
+        'authorization': "Bearer $token"
+      };
+
+      final Response? res = await httpClient.get(url, headers: headers);
+      AppLogger.log("${res?.data}");
+      return res?.data['data'];
+    } on Failure catch (e) {
+      AppLogger.log("failure occured ======> ${e.errorMessage}");
+      return [];
+    } catch (e) {
+      AppLogger.log("This is the catch error : $e");
+      return [];
+    }
+  }
 }
