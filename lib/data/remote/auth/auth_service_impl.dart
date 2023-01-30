@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:ejapay/app/core/client/http_client.dart';
 import 'package:ejapay/app/core/endpoints/endpoints.dart';
 import 'package:ejapay/data/remote/auth/auth_service.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
