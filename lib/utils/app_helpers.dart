@@ -7,7 +7,6 @@ class AppHelpers {
       required String title,
       required bool isLoading,
       Widget? child}) {
-    print("This is the isLoading ====> $isLoading");
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
