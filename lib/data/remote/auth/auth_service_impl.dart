@@ -2,18 +2,16 @@ import 'package:dio/dio.dart';
 import 'package:ejapay/app/core/client/http_client.dart';
 import 'package:ejapay/app/core/endpoints/endpoints.dart';
 import 'package:ejapay/data/remote/auth/auth_service.dart';
-import 'package:ejapay/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:provider/provider.dart';
+
 
 class AuthServiceImpl implements AuthService {
   final HttpClient httpClient;
   AuthServiceImpl(this.httpClient);
 
   @override
-  Future<String> login(BuildContext context) async {
-    UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+  Future<String> login() async {
       const String url = Endpoints.login;
       final String log = dotenv.env["LOG"]!;
       final String password = dotenv.env["PASSWORD"]!;
@@ -39,7 +37,6 @@ class AuthServiceImpl implements AuthService {
 
       Response? res = await httpClient.post(url, data, headers: headers);
       String token = res?.data['token'];
-      userProvider.token = token;
       return token;
   }
 }
