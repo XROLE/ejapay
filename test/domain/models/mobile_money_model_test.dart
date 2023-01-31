@@ -21,7 +21,9 @@ void main() {
         id: '1234567890',
         phoneNumber: '+12345678901',
       );
+
       final json = model.toJson();
+      
       expect(json, {
         'name': 'John Doe',
         'id': '1234567890',
