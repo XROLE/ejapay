@@ -5,10 +5,12 @@ import 'package:ejapay/presentation/base/base_view.dart';
 import 'package:ejapay/presentation/home/home_view_model.dart';
 import 'package:ejapay/presentation/widgets/nav_button.dart';
 import 'package:ejapay/presentation/widgets/payment_method_tile.dart';
+import 'package:ejapay/providers/user_provider.dart';
 import 'package:ejapay/utils/app_colors.dart';
 import 'package:ejapay/utils/app_text_style.dart';
 import 'package:ejapay/utils/tile_shimmer_loader.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,7 +35,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: BaseView<HomeViewModel>(
             model: HomeViewModel(
-                authService: sl.get<AuthService>(), paymentService: sl.get<PaymentService>()),
+                authService: sl.get<AuthService>(), paymentService: sl.get<PaymentService>(), userProvider: context.read<UserProvider>()),
             onModelReady: (model) => model.init(context),
             builder: (context, model, _) {
               return SingleChildScrollView(

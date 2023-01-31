@@ -37,8 +37,6 @@ void main() {
     expect(model.paymentType, json['paymentType']);
     expect(model.paymentMode, json['paymentMode']);
     expect(model.transactionType, json['transactionType']);
-
-    // expect(jsonFromModel, json);
   });
 
   test("fromJson() should return correct map", () {

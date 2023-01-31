@@ -6,9 +6,11 @@ import 'package:ejapay/presentation/home/home_view_model.dart';
 import 'package:ejapay/presentation/mobile_money/create_mobile_money.dart';
 import 'package:ejapay/presentation/widgets/action_button.dart';
 import 'package:ejapay/presentation/widgets/payment_settings_widget.dart';
+import 'package:ejapay/providers/user_provider.dart';
 import 'package:ejapay/utils/app_colors.dart';
 import 'package:ejapay/utils/app_text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MobileMoneySection extends StatelessWidget {
   final int paymentMethodId;
@@ -19,7 +21,7 @@ class MobileMoneySection extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return BaseView<HomeViewModel>(
         model: HomeViewModel(
-            authService: sl.get<AuthService>(), paymentService: sl.get<PaymentService>()),
+            authService: sl.get<AuthService>(), paymentService: sl.get<PaymentService>(), userProvider: context.read<UserProvider>()),
         onModelReady: (model) => model.getPaymentSetting(context: context, id: paymentMethodId),
         builder: (context, model, _) {
           return Column(
