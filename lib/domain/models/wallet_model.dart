@@ -4,7 +4,6 @@ class WalletModel {
   late int? id;
   late String? identification;
   late  String? status;
-  late String? data;
   late String? fullName;
   late String? address;
   late String? accountName;
@@ -23,7 +22,6 @@ class WalletModel {
       this.id,
       this.identification,
       this.status,
-      this.data,
       this.fullName,
       this.address,
       this.accountName,
@@ -42,7 +40,6 @@ class WalletModel {
     id = json['id'] ?? "";
     identification = json['identification'] ?? "";
     status = json['status'] ?? "";
-    data = json['data'] ?? "";
     fullName = json['fullName'] ?? "";
     address = json['address'] ?? "";
     accountName = json['accountName'] ?? "";
@@ -62,7 +59,6 @@ class WalletModel {
     data['id'] = id;
     data['identification'] = identification;
     data['status'] = status;
-    data['data'] = data;
     data['fullName'] = fullName;
     data['address'] = address;
     data['accountName'] = accountName;
