@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                                   return PaymentMethodTile(
                                     title: model.paymentMethods[index].titleEn ?? "",
                                     subTitle: model.paymentMethods[index].descriptionEn ?? "",
-                                    paymentMethodId: model.paymentMethods[index].id,
+                                    paymentMethodId: model.paymentMethods[index].id!,
                                     isFetchingPaymentSettings: model.isFetchingPaymentSettings,
                                   );
                                 },

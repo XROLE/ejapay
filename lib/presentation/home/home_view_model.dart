@@ -43,9 +43,11 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> init(BuildContext context) async {
+    UserProvider userProvider = Provider.of(context, listen: false);
     try {
       isLoading = true;
-      String token = await authService.login(context);
+      String token = await authService.login();
+      userProvider.token = token;
       List<PaymentMethodModel> paymentMethodList = await paymentService.getPaymentMethods(token);
       paymentMethods = paymentMethodList;
       isLoading = false;
@@ -65,13 +67,12 @@ class HomeViewModel extends BaseViewModel {
           await paymentService.getPaymentSettings(token: userProvider.token, methodId: id);
       paymentSettingsList = paymentSettings;
       isFetchingPaymentSettings = false;
-      
     } on Failure catch (e) {
       AppLogger.log(e.errorMessage);
       isFetchingPaymentSettings = false;
       AppLogger.log("Error: ${e.errorMessage}");
     } catch (e) {
-       AppLogger.log("Error: $e");
+      AppLogger.log("Error: $e");
       isFetchingPaymentSettings = false;
     }
   }
