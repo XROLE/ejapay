@@ -43,7 +43,7 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> init(BuildContext context) async {
+  Future<void> init() async {
     try {
       isLoading = true;
       String token = await authService.login();
@@ -60,7 +60,7 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> getPaymentSetting({required BuildContext context, required int id}) async {
+  Future<void> getPaymentSetting(int id) async {
     try {
       isFetchingPaymentSettings = true;
       List<WalletModel> paymentSettings =

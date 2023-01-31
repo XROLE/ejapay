@@ -22,7 +22,7 @@ class MobileMoneySection extends StatelessWidget {
     return BaseView<HomeViewModel>(
         model: HomeViewModel(
             authService: sl.get<AuthService>(), paymentService: sl.get<PaymentService>(), userProvider: context.read<UserProvider>()),
-        onModelReady: (model) => model.getPaymentSetting(context: context, id: paymentMethodId),
+        onModelReady: (model) => model.getPaymentSetting(paymentMethodId),
         builder: (context, model, _) {
           return Column(
             children: [

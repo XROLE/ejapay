@@ -4,7 +4,6 @@ import 'package:ejapay/app/core/endpoints/endpoints.dart';
 import 'package:ejapay/data/remote/auth/auth_service.dart';
 import 'package:ejapay/data/remote/auth/auth_service_impl.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dio/dio.dart' as http;
 

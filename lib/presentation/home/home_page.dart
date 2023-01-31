@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
         body: BaseView<HomeViewModel>(
             model: HomeViewModel(
                 authService: sl.get<AuthService>(), paymentService: sl.get<PaymentService>(), userProvider: context.read<UserProvider>()),
-            onModelReady: (model) => model.init(context),
+            onModelReady: (model) => model.init(),
             builder: (context, model, _) {
               return SingleChildScrollView(
                   child: Padding(
