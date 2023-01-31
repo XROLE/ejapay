@@ -7,12 +7,13 @@ import 'package:ejapay/presentation/base/base_view_model.dart';
 import 'package:ejapay/providers/user_provider.dart';
 import 'package:ejapay/utils/app_logger.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomeViewModel extends BaseViewModel {
   final AuthService authService;
   final PaymentService paymentService;
-  HomeViewModel({required this.authService, required this.paymentService});
+  final UserProvider userProvider;
+  HomeViewModel(
+      {required this.authService, required this.paymentService, required this.userProvider});
 
   List<PaymentMethodModel> _paymentMethods = [];
   List<PaymentMethodModel> get paymentMethods => _paymentMethods;
@@ -43,7 +44,6 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> init(BuildContext context) async {
-    UserProvider userProvider = Provider.of(context, listen: false);
     try {
       isLoading = true;
       String token = await authService.login();
@@ -53,6 +53,7 @@ class HomeViewModel extends BaseViewModel {
       isLoading = false;
     } on Failure catch (e) {
       isLoading = false;
+
       AppLogger.log("Failure occured ${e.errorMessage}");
     } catch (e) {
       isLoading = false;
@@ -60,7 +61,6 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> getPaymentSetting({required BuildContext context, required int id}) async {
-    UserProvider userProvider = Provider.of(context, listen: false);
     try {
       isFetchingPaymentSettings = true;
       List<WalletModel> paymentSettings =
