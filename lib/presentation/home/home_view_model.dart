@@ -6,7 +6,6 @@ import 'package:ejapay/domain/models/wallet_model.dart';
 import 'package:ejapay/presentation/base/base_view_model.dart';
 import 'package:ejapay/providers/user_provider.dart';
 import 'package:ejapay/utils/app_logger.dart';
-import 'package:flutter/material.dart';
 
 class HomeViewModel extends BaseViewModel {
   final AuthService authService;
