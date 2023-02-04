@@ -62,8 +62,10 @@ class HomeViewModel extends BaseViewModel {
   Future<void> getPaymentSetting(int id) async {
     try {
       isFetchingPaymentSettings = true;
+    
       List<WalletModel> paymentSettings =
           await paymentService.getPaymentSettings(token: userProvider.token, methodId: id);
+ 
       paymentSettingsList = paymentSettings;
       isFetchingPaymentSettings = false;
     } on Failure catch (e) {
@@ -71,7 +73,7 @@ class HomeViewModel extends BaseViewModel {
       isFetchingPaymentSettings = false;
       AppLogger.log("Error: ${e.errorMessage}");
     } catch (e) {
-      AppLogger.log("Error: $e");
+      AppLogger.log("Error error: $e");
       isFetchingPaymentSettings = false;
     }
   }

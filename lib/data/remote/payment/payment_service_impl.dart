@@ -38,7 +38,7 @@ class PaymentServiceImpl implements PaymentService {
   }
 
   @override
-  Future<List<WalletModel>> getPaymentSettings({required String token, required methodId}) async {
+  Future<List<WalletModel>> getPaymentSettings({required String token, required int methodId}) async {
     final String url = Endpoints.getPaymentSettings(methodId);
     final String apiKey = dotenv.env["APIKEY"]!;
     final String clientId = dotenv.env["CLIENTID"]!;
