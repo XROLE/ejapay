@@ -42,7 +42,7 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> init() async {
+  Future<void> init({Function(String s)? onSuccess, required Function(String s) onError}) async {
     try {
       isLoading = true;
       String token = await authService.login();
@@ -52,9 +52,10 @@ class HomeViewModel extends BaseViewModel {
       isLoading = false;
     } on Failure catch (e) {
       isLoading = false;
-
+      onError(e.errorMessage);
       AppLogger.log("Failure occured ${e.errorMessage}");
     } catch (e) {
+      onError("Something went wrong, please try again later");
       isLoading = false;
     }
   }
@@ -62,10 +63,10 @@ class HomeViewModel extends BaseViewModel {
   Future<void> getPaymentSetting(int id) async {
     try {
       isFetchingPaymentSettings = true;
-    
+
       List<WalletModel> paymentSettings =
           await paymentService.getPaymentSettings(token: userProvider.token, methodId: id);
- 
+
       paymentSettingsList = paymentSettings;
       isFetchingPaymentSettings = false;
     } on Failure catch (e) {

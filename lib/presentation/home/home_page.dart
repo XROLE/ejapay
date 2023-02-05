@@ -8,6 +8,7 @@ import 'package:ejapay/presentation/widgets/payment_method_tile.dart';
 import 'package:ejapay/providers/user_provider.dart';
 import 'package:ejapay/utils/app_colors.dart';
 import 'package:ejapay/utils/app_text_style.dart';
+import 'package:ejapay/utils/ej_flushbar.dart';
 import 'package:ejapay/utils/tile_shimmer_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,8 +36,14 @@ class _HomePageState extends State<HomePage> {
         ),
         body: BaseView<HomeViewModel>(
             model: HomeViewModel(
-                authService: sl.get<AuthService>(), paymentService: sl.get<PaymentService>(), userProvider: context.read<UserProvider>()),
-            onModelReady: (model) => model.init(),
+                authService: sl.get<AuthService>(),
+                paymentService: sl.get<PaymentService>(),
+                userProvider: context.read<UserProvider>()),
+            onModelReady: (model) => model.init(
+                onError: (errorMessage) {
+                  EjFlushBar.showError(message: errorMessage, context: context);
+                },
+                onSuccess: (s) {}),
             builder: (context, model, _) {
               return SingleChildScrollView(
                   child: Padding(
@@ -107,21 +114,21 @@ class _HomePageState extends State<HomePage> {
                             ),
                           )
                         : StatefulBuilder(
-                          builder: ((context, setInnerState) =>  SizedBox(
-                              height: size.height * .4,
-                              child: ListView.builder(
-                                itemCount: model.paymentMethods.length,
-                                itemBuilder: (context, index) {
-                                  return PaymentMethodTile(
-                                    title: model.paymentMethods[index].titleEn ?? "",
-                                    subTitle: model.paymentMethods[index].descriptionEn ?? "",
-                                    paymentMethodId: model.paymentMethods[index].id!,
-                                    isFetchingPaymentSettings: model.isFetchingPaymentSettings,
-                                  );
-                                },
-                              ),
-                            )),
-                        ),
+                            builder: ((context, setInnerState) => SizedBox(
+                                  height: size.height * .4,
+                                  child: ListView.builder(
+                                    itemCount: model.paymentMethods.length,
+                                    itemBuilder: (context, index) {
+                                      return PaymentMethodTile(
+                                        title: model.paymentMethods[index].titleEn ?? "",
+                                        subTitle: model.paymentMethods[index].descriptionEn ?? "",
+                                        paymentMethodId: model.paymentMethods[index].id!,
+                                        isFetchingPaymentSettings: model.isFetchingPaymentSettings,
+                                      );
+                                    },
+                                  ),
+                                )),
+                          ),
                   ],
                 ),
               ));
