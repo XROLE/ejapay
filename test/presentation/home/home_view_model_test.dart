@@ -42,7 +42,7 @@ void main() {
       verifyNever(() => authServiceMock?.login());
 
       // act
-      await homeViewModel?.init();
+      await homeViewModel?.init(onError: (s){});
       userProviderMock?.token = token;
 
       //verify
@@ -57,7 +57,7 @@ void main() {
       when(() => authServiceMock?.login()).thenThrow(Failure("Sample failure from test"));
 
       // act
-      await homeViewModel?.init();
+      await homeViewModel?.init(onError: (s){}, onSuccess: (s){});
 
       verify(() => authServiceMock?.login()).called(1);
       verifyNever(() => paymentServiceMock?.getPaymentMethods(token));
@@ -70,7 +70,7 @@ void main() {
           .thenAnswer((invocation) => Future.value(paymentMethods));
 
       // act
-      await homeViewModel?.init();
+      await homeViewModel?.init(onError: (s){});
 
       // veriy
       verify(() => authServiceMock?.login()).called(1);
