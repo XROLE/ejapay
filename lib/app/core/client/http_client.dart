@@ -24,7 +24,9 @@ class HttpClient {
       Response response = await dio.get(url, options: Options(headers: headers));
       return response;
     } on DioError catch (e) {
-      AppLogger.log("This is the las =====================> $e");
+      if (e.type == DioErrorType.connectTimeout) {
+        throw Failure("Looks like your internet is unstable, connection timed out");
+      }
       if (e.response != null && e.response?.data != null && e.response?.data['message'] != null) {
         throw Failure(e.response?.data['message']);
       } else {
@@ -45,7 +47,11 @@ class HttpClient {
 
       return response;
     } on DioError catch (e) {
-      AppLogger.log("============> failed ${e.response}");
+      AppLogger.log("response ============> failed ${e.response}");
+
+      if (e.type == DioErrorType.connectTimeout) {
+        throw Failure("Looks like your internet is unstable, connection timed out");
+      }
 
       if (e.response != null && e.response?.data != null && e.response?.data['message'] != null) {
         throw Failure(e.response?.data['message']);
