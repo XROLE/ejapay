@@ -1,3 +1,5 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:ejapay/utils/app_logger.dart';
 import 'package:ejapay/utils/app_text_style.dart';
 import 'package:flutter/material.dart';
 
@@ -53,5 +55,17 @@ class AppHelpers {
                 ),
               ),
             ));
+  }
+
+  static Future<bool> isNetworkConncect() async {
+    bool isConnected = false;
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      isConnected = true;
+    }
+    AppLogger.log("isConnected value ===========> $isConnected");
+    AppLogger.log("isConnected value ===========> $connectivityResult");
+    return isConnected;
   }
 }
