@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:ejapay/app/core/client/eja_interceptor.dart';
 import 'package:ejapay/app/core/endpoints/endpoints.dart';
 import 'package:ejapay/app/core/failure/failure.dart';
 import 'package:ejapay/utils/app_logger.dart';
@@ -17,11 +18,14 @@ class HttpClient {
   static final dio = createDio();
 
   Future<Response?> get(String url, {Map<String, String>? headers}) async {
-    AppLogger.log("url ==> $url");
+    dio.interceptors.add(EjaInterceptor());
+
+    AppLogger.log(" get url ==> $url");
     AppLogger.log("header ==> $headers");
 
     try {
       Response response = await dio.get(url, options: Options(headers: headers));
+      AppLogger.log("Response $response");
       return response;
     } on DioError catch (e) {
       if (e.type == DioErrorType.connectTimeout) {
@@ -38,7 +42,9 @@ class HttpClient {
   }
 
   Future post(String url, dynamic data, {Map<String, String>? headers}) async {
-    AppLogger.log('url ============> $url');
+    dio.interceptors.add(EjaInterceptor());
+
+    AppLogger.log(' post url ============> $url');
     AppLogger.log(' data: ============> $data');
     AppLogger.log(' header: ============> $headers');
     try {

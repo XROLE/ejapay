@@ -5,6 +5,7 @@ import 'package:ejapay/domain/models/payment_method_model.dart';
 import 'package:ejapay/domain/models/wallet_model.dart';
 import 'package:ejapay/presentation/base/base_view_model.dart';
 import 'package:ejapay/providers/user_provider.dart';
+import 'package:ejapay/utils/app_helpers.dart';
 import 'package:ejapay/utils/app_logger.dart';
 
 class HomeViewModel extends BaseViewModel {
@@ -43,6 +44,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> init({Function(String s)? onSuccess, required Function(String s) onError}) async {
+    await AppHelpers.isNetworkConncect();
     try {
       isLoading = true;
       String token = await authService.login();
