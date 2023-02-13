@@ -1,16 +1,28 @@
-# ejapay
+# Ejapay
 
-A new Flutter project.
+A simple flutter project for demostrating some flutter best practices. These practices includes but not limited to 
+
+- MVVM with Clean architecture 
+- Clean code as suggested by Uncle Bob (Robert C Martin)
+- State management using Provider package
+- Dependency injection with GetIt
+- Intercepting network request (with Dio)
+- Working with APIs
+- Working with third party packages
+- Modularity 
+- Unit testing
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Follow the following steps to get started
+Clone the project
+Create a .env file in the root directory
+Check the .env.example for the env variables to be replicated in the .env file
+Contact the admin for the .env variable values
+Once added, proced to run the app by typing `flutter run` in your terminal
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+For help getting started, contact `xrolediamond@gmail.com`.
