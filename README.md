@@ -26,7 +26,7 @@ Follow the following steps to get started
   you should get a screen like this when API call is successful
 
 
-![Simulator Screen Shot - iPhone 14 Pro Max - 2023-02-13 at 12 39 32](https://user-images.githubusercontent.com/32772323/218449508-27a0c0dc-890e-48f2-b0ef-efb070c6f859.png)
+<img src = "![Simulator Screen Shot - iPhone 14 Pro Max - 2023-02-13 at 12 39 32](https://user-images.githubusercontent.com/32772323/218449508-27a0c0dc-890e-48f2-b0ef-efb070c6f859.png)" width = "200">
 
 
 
