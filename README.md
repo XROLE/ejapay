@@ -1,16 +1,38 @@
-# ejapay
+# Ejapay
 
-A new Flutter project.
+A simple flutter project for demostrating some flutter best practices. These practices includes but not limited to 
+
+- MVVM with Clean architecture 
+- Clean code as suggested by Uncle Bob (Robert C Martin)
+- State management using Provider package
+- Dependency injection with GetIt
+- Intercepting network request (with Dio)
+- Working with APIs
+- Working with third party packages
+- Modularity 
+- Unit testing
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Follow the following steps to get started
+1. Clone the project
+2. Create a .env file in the root directory
+3. Check the .env.example for the env variables to be replicated in the .env file
+4. Contact the admin for the .env variable values
+5. Once added, proced to run the app by typing `flutter run` in your terminal
+6. On build success, the app launches the home screen and then makes API calls to;
+  - Login
+  - Fetch payment methods 
+  you should get a screen like this when API call is successful
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<img src = "https://user-images.githubusercontent.com/32772323/218449508-27a0c0dc-890e-48f2-b0ef-efb070c6f859.png" width = "250">
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+7. Clicking on any payment method should open a bottom modal which trigers another API call to get the payment settings. Screenshots below
+
+![](<img src = "https://user-images.githubusercontent.com/32772323/218453961-ed66313f-82ac-4003-ac3e-eed9c5f3143f.png" width = "250">
+<img src = "https://user-images.githubusercontent.com/32772323/218454007-e7787869-c0ce-4d89-8160-dda58184ac35.png" width = "250">)
+
+
+
+For help getting started, contact `xrolediamond@gmail.com`.
