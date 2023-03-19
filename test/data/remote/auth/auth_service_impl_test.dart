@@ -18,25 +18,30 @@ void main() async {
   });
 
   group("AuthService login", () {
+    const String mockToken = "mockTken";
     const String url = Endpoints.login;
     final String log = dotenv.env["LOG"]!;
     final String password = dotenv.env["PASSWORD"]!;
+
     Map<String, dynamic> data = {
       'log': log,
       'password': password,
     };
+
     Map<String, String> headers = reqHeaders;
+
     test("login success", () async {
       // when
       when(() => mockHttpClient.post(url, any(), headers: headers)).thenAnswer((invocation) =>
           Future.value(
-              Response(requestOptions: RequestOptions(path: url), data: {'token': 'mockTken'})));
+              Response(requestOptions: RequestOptions(path: url), data: {'token': mockToken})));
 
       //act
-      await sut.login();
+      final String token = await sut.login();
 
       // verify
       verify(() => mockHttpClient.post(any(), any(), headers: any(named: "headers"))).called(1);
+      expect(token, mockToken);
     });
   });
 }

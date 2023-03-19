@@ -1,0 +1,17 @@
+Map<String, dynamic> walletJson = {
+  "date_creation": 1,
+  "date_update": 1,
+  "id": 1,
+  "identification": "identification",
+  "status": "status",
+  "fullName": "fullName",
+  "address": "address",
+  "accountName": "accountName",
+  "imageLink": "imageLink",
+  "lastUsed": 1,
+  "customer": 1,
+  "country": 1,
+  "paymentType": 1,
+  "paymentMode": 1,
+  "transactionType": 1,
+};
