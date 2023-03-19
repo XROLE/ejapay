@@ -15,12 +15,6 @@ class AuthServiceImpl implements AuthService {
       const String url = Endpoints.login;
       final String log = dotenv.env["LOG"]!;
       final String password = dotenv.env["PASSWORD"]!;
-      final String apiKey = dotenv.env["APIKEY"]!;
-      final String clientId = dotenv.env["CLIENTID"]!;
-      final String appVersion = dotenv.env["VERSION"]!;
-      final String appPlatform = dotenv.env["PLATFORM"]!;
-      final String client = dotenv.env["CLIENT"]!;
-      final String language = dotenv.env["LANGUAGE"]!;
 
       Map<String, dynamic> data = {
         'log': log,

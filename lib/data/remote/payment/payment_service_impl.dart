@@ -13,7 +13,7 @@ class PaymentServiceImpl implements PaymentService {
   @override
   Future<List<PaymentMethodModel>> getPaymentMethods(String token) async {
     const String url = Endpoints.getPaymentMethods;
-     Map<String, String> headers = reqHeaders;
+    Map<String, String> headers = reqHeaders;
     reqHeaders['authorization'] = "Bearer $token";
 
     final Response? res = await httpClient.get(url, headers: headers);
