@@ -9,11 +9,12 @@ import 'package:ejapay/utils/app_helpers.dart';
 import 'package:ejapay/utils/app_logger.dart';
 
 class HomeViewModel extends BaseViewModel {
+  final AppHelpers appHelpers;
   final AuthService authService;
   final PaymentService paymentService;
   final UserProvider userProvider;
   HomeViewModel(
-      {required this.authService, required this.paymentService, required this.userProvider});
+      {required this.authService, required this.paymentService, required this.userProvider, required this.appHelpers});
 
   List<PaymentMethodModel> _paymentMethods = [];
   List<PaymentMethodModel> get paymentMethods => _paymentMethods;
@@ -44,7 +45,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> init({Function(String s)? onSuccess, required Function(String s) onError}) async {
-    await AppHelpers.isNetworkConncect();
+    await appHelpers.isNetworkConncect();
     try {
       isLoading = true;
       String token = await authService.login();
@@ -71,8 +72,9 @@ class HomeViewModel extends BaseViewModel {
 
       paymentSettingsList = paymentSettings;
       isFetchingPaymentSettings = false;
+
     } on Failure catch (e) {
-      AppLogger.log(e.errorMessage);
+      AppLogger.log("error ${e.errorMessage}");
       isFetchingPaymentSettings = false;
       AppLogger.log("Error: ${e.errorMessage}");
     } catch (e) {

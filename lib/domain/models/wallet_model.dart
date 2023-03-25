@@ -3,7 +3,7 @@ class WalletModel {
   late int? dateUpdate;
   late int? id;
   late String? identification;
-  late  String? status;
+  late String? status;
   late String? fullName;
   late String? address;
   late String? accountName;
@@ -15,29 +15,28 @@ class WalletModel {
   late int? paymentMode;
   late int? transactionType;
 
-  WalletModel(
-      {
-        this.dateCreation,
-      this.dateUpdate,
-      this.id,
-      this.identification,
-      this.status,
-      this.fullName,
-      this.address,
-      this.accountName,
-      this.imageLink,
-      this.lastUsed,
-      this.customer,
-      this.country,
-      this.paymentType,
-      this.paymentMode,
-      this.transactionType,
-      });
+  WalletModel({
+    required this.dateCreation,
+    required this.dateUpdate,
+    required this.id,
+    required this.identification,
+    required this.status,
+    required this.fullName,
+    required this.address,
+    required this.accountName,
+    required this.imageLink,
+    required this.lastUsed,
+    required this.customer,
+    required this.country,
+    required this.paymentType,
+    required this.paymentMode,
+    required this.transactionType,
+  });
 
   WalletModel.fromJson(Map<String, dynamic> json) {
-    dateCreation = json['date_creation'] ?? "";
-    dateUpdate = json['date_update'] ?? "";
-    id = json['id'] ?? "";
+    dateCreation = json['date_creation'] ?? 01022023;
+    dateUpdate = json['date_update'] ?? 01022023;
+    id = json['id'] ?? 1;
     identification = json['identification'] ?? "";
     status = json['status'] ?? "";
     fullName = json['fullName'] ?? "";
@@ -45,11 +44,11 @@ class WalletModel {
     accountName = json['accountName'] ?? "";
     imageLink = json['imageLink'] ?? "";
     lastUsed = json['lastUsed'] ?? "";
-    customer = json['customer'] ?? "";
-    country = json['country'] ?? "";
-    paymentType = json['paymentType'] ?? "";
-    paymentMode = json['paymentMode'] ?? "";
-    transactionType = json['transactionType'] ?? "";
+    customer = json['customer'] ?? 1;
+    country = json['country'] ?? 1;
+    paymentType = json['paymentType'] ?? 1;
+    paymentMode = json['paymentMode'] ?? 1;
+    transactionType = json['transactionType'] ?? 1;
   }
 
   Map<String, dynamic> toJson() {

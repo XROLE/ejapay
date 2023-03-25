@@ -57,7 +57,7 @@ class AppHelpers {
             ));
   }
 
-  static Future<bool> isNetworkConncect() async {
+  Future<bool> isNetworkConncect() async {
     bool isConnected = false;
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||

@@ -21,8 +21,6 @@ class AuthServiceImpl implements AuthService {
         'password': password,
       };
        Map<String, String> headers = reqHeaders;
-
-
       Response? res = await httpClient.post(url, data, headers: headers);
       String token = res?.data['token'];
       return token;
