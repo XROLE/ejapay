@@ -72,8 +72,9 @@ class HomeViewModel extends BaseViewModel {
 
       paymentSettingsList = paymentSettings;
       isFetchingPaymentSettings = false;
+
     } on Failure catch (e) {
-      AppLogger.log(e.errorMessage);
+      AppLogger.log("error ${e.errorMessage}");
       isFetchingPaymentSettings = false;
       AppLogger.log("Error: ${e.errorMessage}");
     } catch (e) {

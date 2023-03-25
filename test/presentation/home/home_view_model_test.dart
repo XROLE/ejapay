@@ -18,6 +18,28 @@ void main() {
   late PaymentServiceImplMock paymentServiceImplMock;
   late AppHelpersMock appHelpersMock;
 
+      const String errorMessage = "An error occured, please try again later";
+        List<WalletModel> walletList = [
+      WalletModel(
+           dateCreation: 01022023,
+           dateUpdate: 01022023,
+           id: 1,
+           identification: "identi",
+           status: "status",
+           fullName: "Orange money",
+          address :"address",
+           accountName: "Test account",
+           imageLink: "www.google.com",
+           lastUsed: 01022023,
+           customer: 4,
+           country: 2,
+           paymentType: 4,
+           paymentMode: 2,
+           transactionType: 4,
+      ),
+    ];
+
+
   setUp(() {
     WidgetsFlutterBinding.ensureInitialized();
 
@@ -33,12 +55,6 @@ void main() {
         appHelpers: appHelpersMock,
         );
   });
-
-  // tearDown(() {
-  //   authServiceImplMock = null;
-  //   userProviderMock = UserProviderMock();
-  //   paymentServiceImplMock = PaymentServiceImplMock();
-  // });
 
   group("Test init", () {
     const String token = "taken_value";
@@ -91,17 +107,69 @@ void main() {
       verify(() => paymentServiceImplMock.getPaymentMethods(token)).called(1);
       expect(sut.paymentMethods, paymentMethods);
     });
+
+    test("Verifies that payment methods failed to fetch", () async {
+      // when
+      when(() => appHelpersMock.isNetworkConncect()).thenAnswer((_) async => true);
+      when(() => authServiceImplMock.login()).thenAnswer((_) => Future.value(token));
+      when((() => paymentServiceImplMock.getPaymentMethods(token)))
+          .thenThrow((errorMessage));
+
+      // act
+      await sut.init(onError: (s){});
+
+      // veriy
+      verify(() => authServiceImplMock.login()).called(1);
+      verify(() => paymentServiceImplMock.getPaymentMethods(token)).called(1);
+      expect(sut.paymentMethods, paymentMethods);
+    });
   });
 
   group("Test getPaymentSetting", () {
     const String token = 'token_value';
-    const int methodId = 1;
-    const List<WalletModel> walletList = [];
+  
 
     test("Test getPaymentSetting Success ", () async {
       //when
+      when(() => userProviderMock.token).thenReturn(token);
       when(() => paymentServiceImplMock.getPaymentSettings(token: token, methodId: 1))
-          .thenAnswer((invocation) => Future.value(walletList));
+          .thenAnswer((_) async => walletList);
+
+      expect(sut.isFetchingPaymentSettings, false);
+      expect(sut.paymentSettingsList, []);
+
+      // act
+      final res = sut.getPaymentSetting(1);
+      expect(sut.isFetchingPaymentSettings, true);
+
+      await res;
+
+      verify(() => paymentServiceImplMock.getPaymentSettings(token: token, methodId: 1))
+      .called(1);
+      expect(sut.isFetchingPaymentSettings, false);
+      expect(sut.paymentSettingsList, isA<List<WalletModel>>());
+      expect(sut.paymentSettingsList[0], isA<WalletModel>());
+
+    });
+    test("Test getPaymentSetting Failure catch block", () async {
+      const String errorMessage = "An error occured, please try again later";
+      //when
+      when(() => userProviderMock.token).thenReturn(token);
+      when(() => paymentServiceImplMock.getPaymentSettings(token: token, methodId: 1))
+          .thenThrow(errorMessage);
+
+      // act
+      await sut.getPaymentSetting(1);
+
+      verify(() => paymentServiceImplMock.getPaymentSettings(token: token, methodId: 1))
+      .called(1);
+    });
+
+    test("Test getPaymentSetting Failure should return custom Failure object", () async {
+      //when
+      when(() => userProviderMock.token).thenReturn(token);
+      when(() => paymentServiceImplMock.getPaymentSettings(token: token, methodId: 1))
+          .thenThrow(Failure(errorMessage));
 
       // act
       await sut.getPaymentSetting(1);
@@ -113,10 +181,7 @@ void main() {
 }
 
 class AuthServiceImplMock extends Mock implements AuthServiceImpl {}
-
 class PaymentServiceImplMock extends Mock implements PaymentServiceImpl {}
-
 class HttpClientMock extends Mock implements HttpClient {}
-
 class UserProviderMock extends Mock implements UserProvider {}
 class AppHelpersMock extends Mock implements AppHelpers {}
