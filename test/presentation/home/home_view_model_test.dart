@@ -1,34 +1,44 @@
+import 'package:ejapay/app/core/client/http_client.dart';
 import 'package:ejapay/app/core/failure/failure.dart';
-import 'package:ejapay/data/remote/auth/auth_service.dart';
-import 'package:ejapay/data/remote/payment/payment_service.dart';
+import 'package:ejapay/data/remote/auth/auth_service_impl.dart';
+import 'package:ejapay/data/remote/payment/payment_service_impl.dart';
 import 'package:ejapay/domain/models/payment_method_model.dart';
 import 'package:ejapay/domain/models/wallet_model.dart';
 import 'package:ejapay/presentation/home/home_view_model.dart';
 import 'package:ejapay/providers/user_provider.dart';
+import 'package:ejapay/utils/app_helpers.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 void main() {
-  late HomeViewModel? homeViewModel;
-  late UserProviderMock? userProviderMock;
-  late AuthServiceMock? authServiceMock;
-  late PaymentServiceMock? paymentServiceMock;
+  late HomeViewModel sut;
+  late UserProviderMock userProviderMock;
+  late AuthServiceImplMock authServiceImplMock;
+  late PaymentServiceImplMock paymentServiceImplMock;
+  late AppHelpersMock appHelpersMock;
 
   setUp(() {
-    authServiceMock = AuthServiceMock();
+    WidgetsFlutterBinding.ensureInitialized();
+
+    authServiceImplMock = AuthServiceImplMock();
     userProviderMock = UserProviderMock();
-    paymentServiceMock = PaymentServiceMock();
-    homeViewModel = HomeViewModel(
-        authService: authServiceMock!,
-        paymentService: paymentServiceMock!,
-        userProvider: userProviderMock!);
+    paymentServiceImplMock = PaymentServiceImplMock();
+    appHelpersMock = AppHelpersMock();
+    
+    sut = HomeViewModel(
+        authService: authServiceImplMock,
+        paymentService: paymentServiceImplMock,
+        userProvider: userProviderMock,
+        appHelpers: appHelpersMock,
+        );
   });
 
-  tearDown(() {
-    authServiceMock = null;
-    userProviderMock = UserProviderMock();
-    paymentServiceMock = PaymentServiceMock();
-  });
+  // tearDown(() {
+  //   authServiceImplMock = null;
+  //   userProviderMock = UserProviderMock();
+  //   paymentServiceImplMock = PaymentServiceImplMock();
+  // });
 
   group("Test init", () {
     const String token = "taken_value";
@@ -36,46 +46,50 @@ void main() {
 
     test("verify that getPaymentMethod is Called on login success", () async {
       // when
-      when(() => authServiceMock?.login()).thenAnswer((invocation) => Future.value(token));
-      when((() => paymentServiceMock?.getPaymentMethods(token)))
-          .thenAnswer((invocation) => Future.value(paymentMethods));
-      verifyNever(() => authServiceMock?.login());
+      when(() => appHelpersMock.isNetworkConncect()).thenAnswer((_) async => true);
+      when(() => authServiceImplMock.login()).thenAnswer((_) async => token);
+      when((() => paymentServiceImplMock.getPaymentMethods(token)))
+          .thenAnswer((_) async => paymentMethods);
+      verifyNever(() => authServiceImplMock.login());
 
       // act
-      await homeViewModel?.init(onError: (s){});
-      userProviderMock?.token = token;
+      await sut.init(onSuccess: null, onError: (s){});
+      userProviderMock.token = token;
 
       //verify
-      verify(() => authServiceMock?.login()).called(1);
-      verify(() => paymentServiceMock?.getPaymentMethods(token));
-      expect(homeViewModel?.isLoading, false);
+      verify(() => authServiceImplMock.login()).called(1);
+      verify(() => paymentServiceImplMock.getPaymentMethods(token));
+      expect(sut.isLoading, false);
       expect(token, token);
     });
 
     test("Verify that getPaymentSuccess is Never Called when login fails", () async {
       //when
-      when(() => authServiceMock?.login()).thenThrow(Failure("Sample failure from test"));
+      when(() => appHelpersMock.isNetworkConncect()).thenAnswer((_) async => true);
+      when(() => authServiceImplMock.login()).thenThrow(Failure("Sample failure from test"));
+
 
       // act
-      await homeViewModel?.init(onError: (s){}, onSuccess: (s){});
+      await sut.init(onError: (s){}, onSuccess: (s){});
 
-      verify(() => authServiceMock?.login()).called(1);
-      verifyNever(() => paymentServiceMock?.getPaymentMethods(token));
+      verify(() => authServiceImplMock.login()).called(1);
+      verifyNever(() => paymentServiceImplMock.getPaymentMethods(token));
     });
 
     test("Verifies that payment methods are fetched successfuly", () async {
       // when
-      when(() => authServiceMock?.login()).thenAnswer((Invocation) => Future.value(token));
-      when((() => paymentServiceMock?.getPaymentMethods(token)))
+      when(() => appHelpersMock.isNetworkConncect()).thenAnswer((_) async => true);
+      when(() => authServiceImplMock.login()).thenAnswer((_) => Future.value(token));
+      when((() => paymentServiceImplMock.getPaymentMethods(token)))
           .thenAnswer((invocation) => Future.value(paymentMethods));
 
       // act
-      await homeViewModel?.init(onError: (s){});
+      await sut.init(onError: (s){});
 
       // veriy
-      verify(() => authServiceMock?.login()).called(1);
-      verify(() => paymentServiceMock?.getPaymentMethods(token)).called(1);
-      expect(homeViewModel?.paymentMethods, paymentMethods);
+      verify(() => authServiceImplMock.login()).called(1);
+      verify(() => paymentServiceImplMock.getPaymentMethods(token)).called(1);
+      expect(sut.paymentMethods, paymentMethods);
     });
   });
 
@@ -86,21 +100,23 @@ void main() {
 
     test("Test getPaymentSetting Success ", () async {
       //when
-      when(() => paymentServiceMock?.getPaymentSettings(token: "token", methodId: 1))
+      when(() => paymentServiceImplMock.getPaymentSettings(token: token, methodId: 1))
           .thenAnswer((invocation) => Future.value(walletList));
 
       // act
-      await homeViewModel?.getPaymentSetting(1);
+      await sut.getPaymentSetting(1);
 
-      // verify
-      // verify(() => paymentServiceMock?.getPaymentSettings(token: "token", methodId: 1))
-      // .called(1);
+      verify(() => paymentServiceImplMock.getPaymentSettings(token: token, methodId: 1))
+      .called(1);
     });
   });
 }
 
-class AuthServiceMock extends Mock implements AuthService {}
+class AuthServiceImplMock extends Mock implements AuthServiceImpl {}
 
-class PaymentServiceMock extends Mock implements PaymentService {}
+class PaymentServiceImplMock extends Mock implements PaymentServiceImpl {}
+
+class HttpClientMock extends Mock implements HttpClient {}
 
 class UserProviderMock extends Mock implements UserProvider {}
+class AppHelpersMock extends Mock implements AppHelpers {}

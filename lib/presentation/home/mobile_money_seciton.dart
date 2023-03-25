@@ -8,6 +8,7 @@ import 'package:ejapay/presentation/widgets/action_button.dart';
 import 'package:ejapay/presentation/widgets/payment_settings_widget.dart';
 import 'package:ejapay/providers/user_provider.dart';
 import 'package:ejapay/utils/app_colors.dart';
+import 'package:ejapay/utils/app_helpers.dart';
 import 'package:ejapay/utils/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,7 @@ class MobileMoneySection extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return BaseView<HomeViewModel>(
         model: HomeViewModel(
+          appHelpers: sl.get<AppHelpers>(),
             authService: sl.get<AuthService>(), paymentService: sl.get<PaymentService>(), userProvider: context.read<UserProvider>()),
         onModelReady: (model) => model.getPaymentSetting(paymentMethodId),
         builder: (context, model, _) {

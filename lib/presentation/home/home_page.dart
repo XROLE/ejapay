@@ -7,6 +7,7 @@ import 'package:ejapay/presentation/widgets/nav_button.dart';
 import 'package:ejapay/presentation/widgets/payment_method_tile.dart';
 import 'package:ejapay/providers/user_provider.dart';
 import 'package:ejapay/utils/app_colors.dart';
+import 'package:ejapay/utils/app_helpers.dart';
 import 'package:ejapay/utils/app_text_style.dart';
 import 'package:ejapay/utils/ej_flushbar.dart';
 import 'package:ejapay/utils/tile_shimmer_loader.dart';
@@ -36,6 +37,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: BaseView<HomeViewModel>(
             model: HomeViewModel(
+              appHelpers: sl.get<AppHelpers>(),
                 authService: sl.get<AuthService>(),
                 paymentService: sl.get<PaymentService>(),
                 userProvider: context.read<UserProvider>()),
