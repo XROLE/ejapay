@@ -1,5 +1,7 @@
 # Ejapay
 
+![Coverage](./coverage_badge.svg?sanitize=true)
+
 A simple flutter project for demostrating some flutter best practices. These practices includes but not limited to 
 
 - MVVM with Clean architecture 

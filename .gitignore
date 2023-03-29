@@ -10,6 +10,7 @@
 .svn/
 migrate_working_dir/
 coverage/
+node_modules/
 
 # IntelliJ related
 *.iml
