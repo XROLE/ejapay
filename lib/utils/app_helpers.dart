@@ -56,16 +56,4 @@ class AppHelpers {
               ),
             ));
   }
-
-  Future<bool> isNetworkConncect() async {
-    bool isConnected = false;
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
-      isConnected = true;
-    }
-    AppLogger.log("isConnected value ===========> $isConnected");
-    AppLogger.log("isConnected value ===========> $connectivityResult");
-    return isConnected;
-  }
 }

@@ -7,14 +7,16 @@ import 'package:ejapay/presentation/base/base_view_model.dart';
 import 'package:ejapay/providers/user_provider.dart';
 import 'package:ejapay/utils/app_helpers.dart';
 import 'package:ejapay/utils/app_logger.dart';
+import 'package:ejapay/utils/network_utils.dart';
 
 class HomeViewModel extends BaseViewModel {
   final AppHelpers appHelpers;
   final AuthService authService;
   final PaymentService paymentService;
   final UserProvider userProvider;
+  final NetWorkUtils netWorkUtils;
   HomeViewModel(
-      {required this.authService, required this.paymentService, required this.userProvider, required this.appHelpers});
+      {required this.authService, required this.paymentService, required this.userProvider, required this.appHelpers, required this.netWorkUtils});
 
   List<PaymentMethodModel> _paymentMethods = [];
   List<PaymentMethodModel> get paymentMethods => _paymentMethods;
@@ -45,7 +47,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> init({Function(String s)? onSuccess, required Function(String s) onError}) async {
-    await appHelpers.isNetworkConncect();
+    await netWorkUtils.isNetworkConncect();
     try {
       isLoading = true;
       String token = await authService.login();

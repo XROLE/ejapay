@@ -10,6 +10,7 @@ import 'package:ejapay/providers/user_provider.dart';
 import 'package:ejapay/utils/app_colors.dart';
 import 'package:ejapay/utils/app_helpers.dart';
 import 'package:ejapay/utils/app_text_style.dart';
+import 'package:ejapay/utils/network_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,13 +24,17 @@ class MobileMoneySection extends StatelessWidget {
     return BaseView<HomeViewModel>(
         model: HomeViewModel(
           appHelpers: sl.get<AppHelpers>(),
-            authService: sl.get<AuthService>(), paymentService: sl.get<PaymentService>(), userProvider: context.read<UserProvider>()),
+          authService: sl.get<AuthService>(),
+          paymentService: sl.get<PaymentService>(),
+          userProvider: context.read<UserProvider>(),
+          netWorkUtils: sl.get<NetWorkUtils>(),
+        ),
         onModelReady: (model) => model.getPaymentSetting(paymentMethodId),
         builder: (context, model, _) {
           return Column(
             children: [
-              if(model.isFetchingPaymentSettings)
-              const LinearProgressIndicator(),
+              if (model.isFetchingPaymentSettings)
+                const LinearProgressIndicator(),
               SizedBox(
                 height: size.height * .28,
                 child: model.paymentSettingsList.isEmpty
@@ -47,15 +52,18 @@ class MobileMoneySection extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: size.width * .4,
-                    child: Divider(thickness: 1, color: Colors.black.withOpacity(.2)),
+                    child: Divider(
+                        thickness: 1, color: Colors.black.withOpacity(.2)),
                   ),
                   Text(
                     "or",
-                    style: AppTextStyle.medium(color: Colors.black.withOpacity(.5)),
+                    style: AppTextStyle.medium(
+                        color: Colors.black.withOpacity(.5)),
                   ),
                   SizedBox(
                     width: size.width * .4,
-                    child: Divider(thickness: 1, color: Colors.black.withOpacity(.2)),
+                    child: Divider(
+                        thickness: 1, color: Colors.black.withOpacity(.2)),
                   ),
                 ],
               ),
@@ -70,7 +78,8 @@ class MobileMoneySection extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                   decoration: BoxDecoration(
                       color: AppColors.primary.withOpacity(.2),
                       borderRadius: BorderRadius.circular(8)),

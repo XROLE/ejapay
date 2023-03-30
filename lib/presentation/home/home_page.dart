@@ -10,6 +10,7 @@ import 'package:ejapay/utils/app_colors.dart';
 import 'package:ejapay/utils/app_helpers.dart';
 import 'package:ejapay/utils/app_text_style.dart';
 import 'package:ejapay/utils/ej_flushbar.dart';
+import 'package:ejapay/utils/network_utils.dart';
 import 'package:ejapay/utils/tile_shimmer_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +41,9 @@ class _HomePageState extends State<HomePage> {
               appHelpers: sl.get<AppHelpers>(),
                 authService: sl.get<AuthService>(),
                 paymentService: sl.get<PaymentService>(),
-                userProvider: context.read<UserProvider>()),
+                userProvider: context.read<UserProvider>(),
+                netWorkUtils: sl.get<NetWorkUtils>()
+                ),
             onModelReady: (model) => model.init(
                 onError: (errorMessage) {
                   EjFlushBar.showError(message: errorMessage, context: context);
