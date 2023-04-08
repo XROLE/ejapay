@@ -7,6 +7,7 @@ import 'package:ejapay/domain/models/wallet_model.dart';
 import 'package:ejapay/presentation/home/home_view_model.dart';
 import 'package:ejapay/providers/user_provider.dart';
 import 'package:ejapay/utils/app_helpers.dart';
+import 'package:ejapay/utils/network_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -17,6 +18,7 @@ void main() {
   late AuthServiceImplMock authServiceImplMock;
   late PaymentServiceImplMock paymentServiceImplMock;
   late AppHelpersMock appHelpersMock;
+  late NetWorkUtilsMock netWorkUtilsMock;
 
       const String errorMessage = "An error occured, please try again later";
         List<WalletModel> walletList = [
@@ -47,12 +49,14 @@ void main() {
     userProviderMock = UserProviderMock();
     paymentServiceImplMock = PaymentServiceImplMock();
     appHelpersMock = AppHelpersMock();
+    netWorkUtilsMock = NetWorkUtilsMock();
     
     sut = HomeViewModel(
         authService: authServiceImplMock,
         paymentService: paymentServiceImplMock,
         userProvider: userProviderMock,
         appHelpers: appHelpersMock,
+        netWorkUtils: netWorkUtilsMock,
         );
   });
 
@@ -62,7 +66,7 @@ void main() {
 
     test("verify that getPaymentMethod is Called on login success", () async {
       // when
-      when(() => appHelpersMock.isNetworkConncect()).thenAnswer((_) async => true);
+      when(() => netWorkUtilsMock.isNetworkConncect()).thenAnswer((_) async => true);
       when(() => authServiceImplMock.login()).thenAnswer((_) async => token);
       when((() => paymentServiceImplMock.getPaymentMethods(token)))
           .thenAnswer((_) async => paymentMethods);
@@ -81,7 +85,7 @@ void main() {
 
     test("Verify that getPaymentSuccess is Never Called when login fails", () async {
       //when
-      when(() => appHelpersMock.isNetworkConncect()).thenAnswer((_) async => true);
+      when(() => netWorkUtilsMock.isNetworkConncect()).thenAnswer((_) async => true);
       when(() => authServiceImplMock.login()).thenThrow(Failure("Sample failure from test"));
 
 
@@ -94,7 +98,7 @@ void main() {
 
     test("Verifies that payment methods are fetched successfuly", () async {
       // when
-      when(() => appHelpersMock.isNetworkConncect()).thenAnswer((_) async => true);
+      when(() => netWorkUtilsMock.isNetworkConncect()).thenAnswer((_) async => true);
       when(() => authServiceImplMock.login()).thenAnswer((_) => Future.value(token));
       when((() => paymentServiceImplMock.getPaymentMethods(token)))
           .thenAnswer((invocation) => Future.value(paymentMethods));
@@ -110,7 +114,7 @@ void main() {
 
     test("Verifies that payment methods failed to fetch", () async {
       // when
-      when(() => appHelpersMock.isNetworkConncect()).thenAnswer((_) async => true);
+      when(() => netWorkUtilsMock.isNetworkConncect()).thenAnswer((_) async => true);
       when(() => authServiceImplMock.login()).thenAnswer((_) => Future.value(token));
       when((() => paymentServiceImplMock.getPaymentMethods(token)))
           .thenThrow((errorMessage));
@@ -185,3 +189,4 @@ class PaymentServiceImplMock extends Mock implements PaymentServiceImpl {}
 class HttpClientMock extends Mock implements HttpClient {}
 class UserProviderMock extends Mock implements UserProvider {}
 class AppHelpersMock extends Mock implements AppHelpers {}
+class NetWorkUtilsMock extends Mock implements NetWorkUtils{}
