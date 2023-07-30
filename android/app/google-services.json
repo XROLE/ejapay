@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "560664313137",
+    "project_id": "kitpay-a804d",
+    "storage_bucket": "kitpay-a804d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:560664313137:android:85f2b9593c9d520f3d8410",
+        "android_client_info": {
+          "package_name": "com.example.ejapay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "560664313137-7si0sf8q29jn4on00ro4rfiam7lcglq7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-oLe4wB_k_ihS--EQCIOOwBuXdx5pjwI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "560664313137-7si0sf8q29jn4on00ro4rfiam7lcglq7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
