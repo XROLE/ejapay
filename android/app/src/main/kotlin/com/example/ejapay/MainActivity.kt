@@ -1,4 +1,4 @@
-package com.example.ejapay
+package com.kitpay.ejapay
 
 import io.flutter.embedding.android.FlutterActivity
 

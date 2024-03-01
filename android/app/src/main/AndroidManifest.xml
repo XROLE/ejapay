@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ejapay">
+    package="com.kitpay.ejapay">
    <application
         android:label="ejapay"
         android:name="${applicationName}"

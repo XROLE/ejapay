@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:560664313137:android:85f2b9593c9d520f3d8410",
+        "mobilesdk_app_id": "1:560664313137:android:0b94969d2a6ac25b3d8410",
         "android_client_info": {
-          "package_name": "com.example.ejapay"
+          "package_name": "com.kitpay.ejapay"
         }
       },
       "oauth_client": [
