@@ -13,7 +13,6 @@ import 'package:ejapay/utils/ej_flushbar.dart';
 import 'package:ejapay/utils/network_utils.dart';
 import 'package:ejapay/utils/tile_shimmer_loader.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

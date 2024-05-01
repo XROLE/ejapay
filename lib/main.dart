@@ -15,11 +15,14 @@ void main() async {
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // FirebaseRemoteConfigService remoteConfig = FirebaseRemoteConfigService();
+  FirebaseRemoteConfigService remoteConfig = FirebaseRemoteConfigService();
+  await remoteConfig.init();
 
-  // bool ss = remoteConfig.getBool(FirebaseRemoteConfigKeys.shouldShowXrole);
+  bool ss = remoteConfig.getBool(FirebaseRemoteConfigKeys.shouldShowXrole);
+  int sss = remoteConfig.getInt(FirebaseRemoteConfigKeys.xrole);
 
-  // print("Yoo ===================================== $ss");
+  print("Yoo ===================================== $ss");
+  print("Yoo ss ===================================== $sss");
   runApp(MultiProvider(
     providers: [ChangeNotifierProvider(create: (_) => UserProvider())],
     child: const MyApp(),
