@@ -12,6 +12,7 @@ import 'package:ejapay/utils/app_text_style.dart';
 import 'package:ejapay/utils/ej_flushbar.dart';
 import 'package:ejapay/utils/network_utils.dart';
 import 'package:ejapay/utils/tile_shimmer_loader.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +24,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void logEvent() {
+    FirebaseAnalytics.instance.logEvent(
+      name: 'button_clicked',
+      parameters: {'button_id': 'login_button'},
+    );
+  }
+
+  @override
+  void initState() {
+    logEvent();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -38,12 +53,11 @@ class _HomePageState extends State<HomePage> {
         ),
         body: BaseView<HomeViewModel>(
             model: HomeViewModel(
-              appHelpers: sl.get<AppHelpers>(),
+                appHelpers: sl.get<AppHelpers>(),
                 authService: sl.get<AuthService>(),
                 paymentService: sl.get<PaymentService>(),
                 userProvider: context.read<UserProvider>(),
-                netWorkUtils: sl.get<NetWorkUtils>()
-                ),
+                netWorkUtils: sl.get<NetWorkUtils>()),
             onModelReady: (model) => model.init(
                 onError: (errorMessage) {
                   EjFlushBar.showError(message: errorMessage, context: context);
@@ -66,23 +80,29 @@ class _HomePageState extends State<HomePage> {
                       height: 50,
                       width: 50,
                       decoration: BoxDecoration(
-                          color: AppColors.primary, borderRadius: BorderRadius.circular(12)),
-                      child: const Icon(Icons.folder_outlined, color: Colors.white),
+                          color: AppColors.primary,
+                          borderRadius: BorderRadius.circular(12)),
+                      child: const Icon(Icons.folder_outlined,
+                          color: Colors.white),
                     ),
                     SizedBox(height: size.height * .01),
                     Text(
                       "Ejara Flex",
-                      style: AppTextStyle.subTitle(color: Colors.black.withOpacity(.4)),
+                      style: AppTextStyle.subTitle(
+                          color: Colors.black.withOpacity(.4)),
                     ),
                     SizedBox(height: size.height * .03),
                     RichText(
                       text: TextSpan(children: [
                         TextSpan(
-                            text: "20,000", style: AppTextStyle.title(color: AppColors.appyBlue)),
+                            text: "20,000",
+                            style:
+                                AppTextStyle.title(color: AppColors.appyBlue)),
                         TextSpan(
                             text: "CFA",
                             style: AppTextStyle.title(
-                                color: AppColors.primary, fontWeight: FontWeight.w500)),
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.w500)),
                       ]),
                     ),
                     SizedBox(height: size.height * .055),
@@ -91,11 +111,13 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Text(
                           "Earnings per day",
-                          style: AppTextStyle.medium(color: Colors.black.withOpacity(.4)),
+                          style: AppTextStyle.medium(
+                              color: Colors.black.withOpacity(.4)),
                         ),
                         Text(
                           "10,000CFA",
-                          style: AppTextStyle.medium(color: Colors.black.withOpacity(.4)),
+                          style: AppTextStyle.medium(
+                              color: Colors.black.withOpacity(.4)),
                         ),
                       ],
                     ),
@@ -125,10 +147,16 @@ class _HomePageState extends State<HomePage> {
                                     itemCount: model.paymentMethods.length,
                                     itemBuilder: (context, index) {
                                       return PaymentMethodTile(
-                                        title: model.paymentMethods[index].titleEn ?? "",
-                                        subTitle: model.paymentMethods[index].descriptionEn ?? "",
-                                        paymentMethodId: model.paymentMethods[index].id!,
-                                        isFetchingPaymentSettings: model.isFetchingPaymentSettings,
+                                        title: model.paymentMethods[index]
+                                                .titleEn ??
+                                            "",
+                                        subTitle: model.paymentMethods[index]
+                                                .descriptionEn ??
+                                            "",
+                                        paymentMethodId:
+                                            model.paymentMethods[index].id!,
+                                        isFetchingPaymentSettings:
+                                            model.isFetchingPaymentSettings,
                                       );
                                     },
                                   ),
