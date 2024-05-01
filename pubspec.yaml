@@ -28,6 +28,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.5
   mocktail: ^0.3.0
+  firebase_analytics: ^10.10.4
+  firebase_remote_config: ^4.4.4
+  firebase_core: ^2.30.1
 
 dev_dependencies:
   flutter_test:
