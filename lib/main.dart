@@ -3,6 +3,7 @@ import 'package:ejapay/data/remote/remote_config/firebase_remote_config.dart';
 import 'package:ejapay/firebase_options.dart';
 import 'package:ejapay/providers/user_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,21 @@ void main() async {
 
   FirebaseRemoteConfigService remoteConfig = FirebaseRemoteConfigService();
   await remoteConfig.init();
+  final messaging = FirebaseMessaging.instance;
+
+  final settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  print("permission =================================> $settings");
+
+  String? fcmToken = await messaging.getToken();
+  print("FCM token =================================> $fcmToken");
 
   bool ss = remoteConfig.getBool(FirebaseRemoteConfigKeys.shouldShowXrole);
   int sss = remoteConfig.getInt(FirebaseRemoteConfigKeys.xrole);
