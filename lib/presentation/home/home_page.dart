@@ -1,6 +1,7 @@
 import 'package:ejapay/app/core/di/service_locator.dart';
 import 'package:ejapay/data/remote/auth/auth_service.dart';
 import 'package:ejapay/data/remote/payment/payment_service.dart';
+import 'package:ejapay/presentation/about/about_notification.dart';
 import 'package:ejapay/presentation/base/base_view.dart';
 import 'package:ejapay/presentation/home/home_view_model.dart';
 import 'package:ejapay/presentation/widgets/nav_button.dart';
@@ -76,14 +77,17 @@ class _HomePageState extends State<HomePage> {
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: size.height * .04),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: BorderRadius.circular(12)),
-                      child: const Icon(Icons.folder_outlined,
-                          color: Colors.white),
+                    GestureDetector(
+                      onTap: () => Navigator.pushNamed(context, "/notification_screen"),
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(12)),
+                        child: const Icon(Icons.folder_outlined,
+                            color: Colors.white),
+                      ),
                     ),
                     SizedBox(height: size.height * .01),
                     Text(

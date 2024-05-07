@@ -1,6 +1,8 @@
 import 'package:ejapay/app/core/di/service_locator.dart';
 import 'package:ejapay/data/remote/remote_config/firebase_remote_config.dart';
 import 'package:ejapay/firebase_options.dart';
+import 'package:ejapay/integration/firebase.dart';
+import 'package:ejapay/presentation/about/about_notification.dart';
 import 'package:ejapay/providers/user_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
 import 'presentation/home/home_page.dart';
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +21,7 @@ void main() async {
 
   FirebaseRemoteConfigService remoteConfig = FirebaseRemoteConfigService();
   await remoteConfig.init();
+  await FirebaseApi().initNotification();
 
   bool ss = remoteConfig.getBool(FirebaseRemoteConfigKeys.shouldShowXrole);
   int sss = remoteConfig.getInt(FirebaseRemoteConfigKeys.xrole);
@@ -41,6 +46,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      navigatorKey: navigatorKey,
+      routes: {
+        "/notification_screen": (context) => const AboutNotification(),
+      },
       home: const HomePage(),
     );
   }
