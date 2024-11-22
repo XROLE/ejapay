@@ -32,7 +32,7 @@ Follow the following steps to get started
 
 7. Clicking on any payment method should open a bottom modal which trigers another API call to get the payment settings. Screenshots below
 
-![](<img src = "https://user-images.githubusercontent.com/32772323/218453961-ed66313f-82ac-4003-ac3e-eed9c5f3143f.png" width = "250">
+<img src = "https://user-images.githubusercontent.com/32772323/218453961-ed66313f-82ac-4003-ac3e-eed9c5f3143f.png" width = "250">
 <img src = "https://user-images.githubusercontent.com/32772323/218454007-e7787869-c0ce-4d89-8160-dda58184ac35.png" width = "250">)
 
 
